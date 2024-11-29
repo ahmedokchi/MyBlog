@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Nouveau Post
+{% endblock %}
+
+{% block body %}
+
+	{% include('navbar.html.twig') %}
+
+	<div class="hero bg-dark text-white py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto text-center">
+					<h1 class="display-4">Créer un Nouveau Post</h1>
+					<p class="lead">Partagez vos dernières actualités ou idées avec le monde.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container py-5">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="card shadow-lg">
+					<div class="card-header bg-primary text-white">
+						<h4 class="mb-0">Formulaire de Publication</h4>
+					</div>
+					<div
+						class="card-body">
+						{# Ajout de l'attribut enctype pour gérer les fichiers #}
+						{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+
+						<div class="form-group mb-3">
+							{{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.title) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+							{{ form_errors(form.content) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(form.publishedAt, 'Date de publication', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.publishedAt, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.publishedAt) }}
+						</div>
+
+						<div
+							class="form-group mb-3">
+							{# Mise à jour du libellé pour indiquer un champ d'upload #}
+							{{ form_label(form.picture, 'Image du post', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.picture, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.picture) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(form.category, 'Catégorie', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+							{{ form_errors(form.category) }}
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary btn-lg">
+								Publier
+							</button>
+						</div>
+
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include('footer.html.twig') %}
+{% endblock %}

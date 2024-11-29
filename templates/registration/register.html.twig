@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire
+{% endblock %}
+
+{% block body %}
+
+	{% include('navbar.html.twig') %}
+
+	<div class="hero bg-dark text-white py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto text-center">
+					<h1 class="display-4">Créer un nouveau compte</h1>
+					<p class="lead">Rejoignez notre plateforme en créant un compte. C'est rapide et facile !</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container py-5">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="card shadow-lg">
+					<div class="card-header bg-primary text-white">
+						<h4 class="mb-0">Formulaire d'Inscription</h4>
+					</div>
+					<div class="card-body">
+						{{ form_errors(registrationForm) }}
+
+						{{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+						<div class="form-group mb-3">
+							{{ form_label(registrationForm.firstName, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.firstName) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(registrationForm.lastName, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.lastName) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.email) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.plainPassword) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(registrationForm.profilePicture, 'Photo de profil', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(registrationForm.profilePicture, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.profilePicture) }}
+						</div>
+
+						<div class="form-group mb-3">
+							{{ form_label(registrationForm.agreeTerms, 'J\'accepte les conditions d\'utilisation', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+							{{ form_errors(registrationForm.agreeTerms) }}
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary btn-lg">
+								S'inscrire
+							</button>
+						</div>
+
+						{{ form_end(registrationForm) }}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% include('footer.html.twig') %}
+{% endblock %}

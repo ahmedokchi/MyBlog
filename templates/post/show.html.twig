@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ post.title }}
+{% endblock %}
+
+{% block body %}
+	{% include('navbar.html.twig') %}
+
+	<div class="hero bg-dark text-white py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto text-center">
+					<h1 class="display-4">{{ post.title }}</h1>
+					<p class="lead">Publié le
+						{{ post.publishedAt|date('d/m/Y') }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<div class="mb-4">
+					<!-- Affichage de l'image du post -->
+					{% if post.picture %}
+						<img src="{{ asset('images/' ~ post.picture) }}" class="img-fluid rounded" alt="{{ post.title }}">
+					{% else %}
+						<p>Aucune image pour ce post.</p>
+					{% endif %}
+				</div>
+				<div class="post-content">
+					<p>{{ post.content|raw }}</p>
+				</div>
+				<div class="mt-4 d-flex justify-content-between">
+					<a href="{{ path('app_posts') }}" class="btn btn-secondary">Retour à la liste</a>
+					<div>
+						{% if is_granted('EDIT', post) or is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('app_post_edit', { id: post.id }) }}" class="btn btn-primary">Modifier</a>
+						{% endif %}
+						{% if is_granted('DELETE', post) or is_granted('ROLE_ADMIN') %}
+							<form method="post" action="{{ path('app_post_delete', { id: post.id }) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete_post_' ~ post.id) }}">
+								<button type="submit" class="btn btn-danger">Supprimer</button>
+							</form>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container py-5">
+		<h2>Commentaires</h2>
+		<ul class="list-group mb-4">
+			{% for comment in comments %}
+				<li class="list-group-item">
+					<p>
+						<strong>{{ comment.user ? comment.user.firstName : 'Anonyme' }}</strong>
+						({{ comment.createdAt|date('d/m/Y H:i') }})
+					</p>
+					<p>{{ comment.content }}</p>
+					<div class="mt-4">
+						{% if is_granted('EDIT', post) or is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('app_comment_edit', { id: comment.id }) }}" class="btn btn-primary">Modifier</a>
+						{% endif %}
+						{% if is_granted('DELETE', post) or is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('app_comment_delete', { id: comment.id }) }}" class="btn btn-danger">Supprimer</a>
+						{% endif %}
+					</div>
+				</li>
+			{% else %}
+				<li class="list-group-item">Aucun commentaire pour le moment.</li>
+			{% endfor %}
+		</ul>
+
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<h3>Ajouter un commentaire</h3>
+			{{ form_start(form) }}
+			<div class="mb-3">
+				{{ form_row(form.content, {'attr': {'class': 'form-control'}}) }}
+			</div>
+			<button type="submit" class="btn btn-success">Envoyer</button>
+			{{ form_end(form) }}
+		{% else %}
+			<p>Vous devez être
+				<a href="{{ path('app_login') }}">connecté</a>
+				pour ajouter un commentaire.</p>
+		{% endif %}
+	</div>
+
+	{% include('footer.html.twig') %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer mon profil
+{% endblock %}
+
+{% block body %}
+	{% include('navbar.html.twig') %}
+
+	<div class="hero bg-dark text-white py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h1 class="display-4">Édition de mon profil</h1>
+					<p class="lead">Mettez à jour vos informations personnelles</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container py-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				{% if app.flashes('success') %}
+					<div class="alert alert-success">
+						{% for message in app.flashes('success') %}
+							<p>{{ message }}</p>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				<div class="card shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title mb-4">Formulaire d'édition</h5>
+
+						{{ form_start(form) }}
+						<div class="mb-3">
+							{{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="mb-3">
+							{{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="mb-3">
+							{{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="mb-3">
+							{{ form_row(form.profilePicture, {'attr': {'class': 'form-control-file'}}) }}
+						</div>
+						<button type="submit" class="btn btn-primary btn-block">Mettre à jour</button>
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    {% include('footer.html.twig') %}
+{% endblock %}

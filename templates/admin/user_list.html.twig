@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+
+	{% include('navbar.html.twig') %}
+
+    <br><br>
+
+	<div class="container py-5">
+		<h1 class="mb-4">Liste des utilisateurs</h1>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Email</th>
+					<th>Nom</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<td>{{ user.id }}</td>
+						<td>{{ user.email }}</td>
+						<td>{{ user.firstName }} {{ user.lastName }}</td>
+						<td>{{ user.isActive ? 'Actif' : 'Désactivé' }}</td>
+						<td>
+							{% if user.isActive %}
+								<a href="{{ path('admin_user_deactivate', {'id': user.id}) }}" class="btn btn-warning">Désactiver</a>
+							{% else %}
+								<a href="{{ path('admin_user_activate', {'id': user.id}) }}" class="btn btn-success">Activer</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

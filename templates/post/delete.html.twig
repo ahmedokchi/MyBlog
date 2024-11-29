@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer le post
+{% endblock %}
+
+{% block body %}
+
+	{% include('navbar.html.twig') %}
+
+	<div class="container mt-5">
+		<h1>Êtes-vous sûr de vouloir supprimer ce post ?</h1>
+		<p>
+			<strong>{{ post.title }}</strong>
+		</p>
+		<p>{{ post.content|slice(0, 100) }}...</p>
+
+		<div class="mt-4">
+			{{ form_start(form) }}
+			<button type="submit" class="btn btn-danger">Supprimer</button>
+			<a href="{{ path('app_posts') }}" class="btn btn-secondary">Annuler</a>
+			{{ form_end(form) }}
+		</div>
+	</div>
+	{% include('footer.html.twig') %}
+{% endblock %}

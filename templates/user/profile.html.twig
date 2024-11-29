@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de l'utilisateur{% endblock %}
+
+{% block body %}
+    {% include('navbar.html.twig') %}
+
+    <div class="hero bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1 class="display-4">Bienvenue, {{ user.firstName }} {{ user.lastName }}</h1>
+                    <p class="lead">Voici les détails de votre profil</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row">
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Email</h5>
+                        <p class="card-text">{{ user.email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Photo de Profil</h5>
+                        {% if user.profilePicture %}
+                            <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Photo de Profil" class="img-fluid" width="150"/>
+                        {% else %}
+                            <p>Aucune photo de profil téléchargée.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Prénom</h5>
+                        <p class="card-text">{{ user.firstName }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Nom</h5>
+                        <p class="card-text">{{ user.lastName }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Date de création du compte</h5>
+                        <p class="card-text">{{ user.createdAt|date('d/m/Y H:i:s') }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Dernière mise à jour du profil</h5>
+                        <p class="card-text">{{ user.updatedAt|date('d/m/Y H:i:s') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 text-center mt-4">
+            <a href="{{ path('app_edit_profile') }}" class="btn btn-primary btn-lg">Modifier mon profil</a>
+        </div>
+    </div>
+
+    {% include('footer.html.twig') %}
+{% endblock %}

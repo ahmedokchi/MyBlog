@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="{{ path('app_posts') }}">Mon super blog</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-auto">
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_posts' %}active{% endif %}" href="{{ path('app_posts') }}">Accueil</a>
+				</li>
+				<li class="nav-item">
+					{% if is_granted('ADD', 'App\Entity\Post') or is_granted('ROLE_ADMIN') %}
+						<a class="nav-link {% if app.request.attributes.get('_route') == 'app_post_add' %}active{% endif %}" href="{{ path('app_post_add') }}">Ajouter un Post</a>
+					{% endif %}
+				</li>
+				<li class="nav-item">
+					{% if is_granted('ADD', 'App\Entity\Post') or is_granted('ROLE_ADMIN') %}
+						<a class="nav-link {% if app.request.attributes.get('_route') == 'admin_user_list' %}active{% endif %}" href="{{ path('admin_user_list') }}">Liste utilisateurs</a>
+					{% endif %}
+				</li>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.attributes.get('_route') == 'app_profile' %}active{% endif %}" href="{{ path('app_profile') }}">Compte</a>
+					</li>
+				{% endif %}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.attributes.get('_route') == 'app_logout' %}active{% endif %}" href="{{ path('app_logout') }}">Déconnexion</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}" href="{{ path('app_login') }}">Connexion</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
